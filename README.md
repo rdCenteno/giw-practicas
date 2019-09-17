@@ -5,7 +5,7 @@ Cada práctica tendra su propia carpeta en la que se guardará el notebook.
 
 ## Grupo 8
 
-Arturo Aguirre  
-Ronny  
-Ignacio  
-Arturo Pinar
+Arturo Aguirre Calvo  
+Ronny Demera Centeno  
+Ignacio Vítores Sancho  
+Alberto Moreno Gracia
