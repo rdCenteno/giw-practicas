@@ -56,7 +56,7 @@ CREATE TABLE Distribucion(
 	cifc int,
 	codcoche int,
 	cantidad int,
-	PRIMARY KEY (cifc),
+	PRIMARY KEY (cifc, codcoche),
 	FOREIGN KEY (cifc) REFERENCES Concesionarios(cifc),
 	FOREIGN KEY (codcoche) REFERENCES Coches(codcoche)
 );
@@ -115,11 +115,11 @@ VALUES (13, "a4", "1.8");
 INSERT INTO Coches
 VALUES (14, "a4", "2.8");
 INSERT INTO Coches
-VALUES (12, "astra", "caravan");
+VALUES (15, "astra", "caravan");
 INSERT INTO Coches
-VALUES (13, "astra", "gti");
+VALUES (16, "astra", "gti");
 INSERT INTO Coches
-VALUES (14, "corsa", "1.4");
+VALUES (17, "corsa", "1.4");
 
 
 
@@ -172,59 +172,59 @@ VALUES (5, "ecar", "Bilbao");
 
 
 INSERT INTO Distribucion
-VALUES ("1", "1", "3");
+VALUES (1, 1, 3);
 INSERT INTO Distribucion
-VALUES ("1", "2", "7");
+VALUES (1, 2, 7);
 INSERT INTO Distribucion
-VALUES ("1", "3", "7");
+VALUES (1, 3, 7);
 INSERT INTO Distribucion
-VALUES ("2", "6", "5");
+VALUES (2, 6, 5);
 INSERT INTO Distribucion
-VALUES ("2", "7", "10");
+VALUES (2, 7, 10);
 INSERT INTO Distribucion
-VALUES ("2", "8", "10");
+VALUES (2, 8, 10);
 INSERT INTO Distribucion
-VALUES ("3", "10", "5");
+VALUES (3, 10, 5);
 INSERT INTO Distribucion
-VALUES ("3", "11", "3");
+VALUES (3, 11, 3);
 INSERT INTO Distribucion
-VALUES ("3", "12", "5");
+VALUES (3, 12, 5);
 INSERT INTO Distribucion
-VALUES ("4", "13", "10");
+VALUES (4, 13, 10);
 INSERT INTO Distribucion
-VALUES ("4", "14", "5");
+VALUES (4, 14, 5);
 
 INSERT INTO Clientes
-VALUES ("1", "Luis", "Garcia", "Madrid");
+VALUES (1, "Luis", "Garcia", "Madrid");
 INSERT INTO Clientes
-VALUES ("2", "Antonio", "Lopez", "Valencia");
+VALUES (2, "Antonio", "Lopez", "Valencia");
 INSERT INTO Clientes
-VALUES ("3", "Juan", "Martin", "Madrid");
+VALUES (3, "Juan", "Martin", "Madrid");
 INSERT INTO Clientes
-VALUES ("4", "Maria", "Garcia", "Madrid");
+VALUES (4, "Maria", "Garcia", "Madrid");
 INSERT INTO Clientes
-VALUES ("5", "Javier", "Gonzalez", "Barcelona");
+VALUES (5, "Javier", "Gonzalez", "Barcelona");
 INSERT INTO Clientes
-VALUES ("6", "Ana", "Lopez", "Barcelona");
+VALUES (6, "Ana", "Lopez", "Barcelona");
 INSERT INTO Clientes
-VALUES ("7", "Ana", "Lopez", "Madrid");
+VALUES (7, "Ana", "Lopez", "Madrid");
 INSERT INTO Clientes
-VALUES ("8", "Ana", "Lopez", "Barcelona");
+VALUES (8, "Ana", "Lopez", "Barcelona");
 
 
 INSERT INTO Ventas
 VALUES (1, 1, 1, "blanco");
 INSERT INTO Ventas
-VALUES ("1", "2", "5", "rojo");
+VALUES (1, 2, 5, "rojo");
 INSERT INTO Ventas
-VALUES ("2", "3", "8", "blanco");
+VALUES (2, 3, 8, "blanco");
 INSERT INTO Ventas
-VALUES ("2", "1", "6", "rojo");
+VALUES (2, 1, 6, "rojo");
 INSERT INTO Ventas
-VALUES ("3", "4", "11", "rojo");
+VALUES (3, 4, 11, "rojo");
 INSERT INTO Ventas
-VALUES ("4", "5", "14", "verde");
+VALUES (4, 5, 14, "verde");
 INSERT INTO Ventas
-VALUES ("4", "5", "13", "rojo");
+VALUES (4, 5, 13, "rojo");
 INSERT INTO Ventas
-VALUES ("4", "4", "14", "verde");
+VALUES (4, 4, 14, "verde");
