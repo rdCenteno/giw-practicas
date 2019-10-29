@@ -20,6 +20,10 @@
 	</select>
         <INPUT VALUE="OK" TYPE="submit" />
     </form>
+
+	<form action="/menuInicio">
+    	<input type="submit" value="Volver al inicio" />
+	</form>
 	
 </body>
 </html>
