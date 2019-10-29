@@ -10,7 +10,7 @@
 
     </header>
     <FORM ACTION="/menuInicio/serv1/{{url}}" METHOD="post">
-        <select name="web" disabled>
+        <select name="web" disabled value={{url}}>
 	  <option value={{url}}>{{url}}</option>
         </select>
 	<select name="planta">
