@@ -55,34 +55,28 @@ def find_users():
 
 @route('/index/find_users', method='POST')
 def find_users():
-    parametros = []
-    resultados = []
+    parametros = {}
+    info = []
+    dic = {}
     name = request.forms.get('name')
     surname = request.forms.get('surname')
     birthday = request.forms.get('birthday')
     if (name != ""):
-        parametros.append(["name", name])
+        parametros["name"] = name
     if (surname != ""):
-        parametros.append(["surname", surname])
+        parametros["surname"] = surname
     if (birthday != ""):
-        parametros.append(["birthday", birthday])
+        parametros["birthday"] = birthday
     db = conectar_db()
     c = db['users']
-    busqueda = "{"
-    # Para concatenar los parametros que haya
-    for i in parametros:
-        busqueda = busqueda + '"' + i[0] + '":"' + i[1] + '",'
-    # Quito la coma que sobra del final
-    busqueda = busqueda[0:len(busqueda)-1]
-    busqueda += "}"
-    print(busqueda)
-    # No funciona creo que porque no le vale que sea una variable
-    # en vez de {"name":"Juan"}
-    resultados = c.find(busqueda)
-    for p in resultados:
+    print(parametros)
+    res = c.find(parametros)
+    for p in res:
         print(p)
-        print("------------------------------")
-    return '<p>Busqueda</p>'
+        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"], p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
+
+    print(info)
+    return template('res_ej1.tpl', informacion=info)
 
 
 
