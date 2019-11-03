@@ -50,9 +50,20 @@ def find_users():
     # http://localhost:8080/find_users?name=Luz
     # http://localhost:8080/find_users?name=Luz&surname=Romero
     # http://localhost:8080/find_users?name=Luz&surname=Romero&birthdate=2006-08-14
-    return template('p_ej1.tpl')
+    
+    #Con el request.query se devuelve un diccionario que contiene los atributos de la url
+    parametros = request.query
+    db = conectar_db()
+    c = db['users']
+    print(parametros)
+    res = c.find(parametros)
+    for p in res:
+        print(p)
+        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"], p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
 
-
+    print(info)
+    return template('res_ej1.tpl', informacion=info)
+'''
 @route('/index/find_users', method='POST')
 def find_users():
     parametros = {}
@@ -77,7 +88,7 @@ def find_users():
 
     print(info)
     return template('res_ej1.tpl', informacion=info)
-
+'''
 
 
 
