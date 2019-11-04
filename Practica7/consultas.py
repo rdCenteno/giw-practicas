@@ -27,7 +27,7 @@ def conectar_db():
 def devuelveValores(objeto):
     return [objeto["_id"], objeto["email"], objeto["webpage"], objeto["password"], objeto["credit_card"]["number"], objeto["credit_card"]["expire"]["year"], 
     objeto["credit_card"]["expire"]["month"], objeto["name"], objeto["surname"], objeto["address"]["country"], objeto["address"]["zip"], objeto["address"]["street"], 
-    objeto["address"]["num"], objeto["likes"]] 
+    objeto["address"]["num"], objeto["likes"], objeto["birthdate"]] 
                 
 
 

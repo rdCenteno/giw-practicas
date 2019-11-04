@@ -17,14 +17,15 @@
         <td><strong>Apellido</strong></td>
         <td><strong>Dirección</strong></td>
         <td><strong>Aficiones</strong></td>
+	<td><strong>Fecha de nacimiento</strong></td>
     </tr>
     %contador = 0
     %for i in informacion:
     %contador+=1
     <tr>
         <td>{{i[0]}}</td>
-        <td>{{i[1]}}</td>
-        <td>{{i[2]}}</td>
+        <td><a href={{i[1]}}>{{i[1]}}</a></td>
+        <td><a href={{i[2]}}>{{i[2]}}</a></td>
         <td>{{i[4]}} Caduca:{{i[5]}}-{{i[6]}}</td>
         <td>{{i[3]}}</td>
         <td>{{i[7]}}</td>
@@ -36,17 +37,15 @@
 	     {{j}} &nbsp
 	    %end
 	</td>
+	<td>
+	{{i[14]}}
+	</td>
     </tr>
 	%end
     <tr>
      Numero de resultados: {{contador}}
     </tr>
     </table>
-
-
-    <form action="/index">
-    	<input type="submit" value="Volver al inicio" />
-	</form>
 
 </body>
 </html>
