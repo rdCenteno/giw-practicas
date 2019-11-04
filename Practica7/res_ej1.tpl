@@ -18,8 +18,9 @@
         <td><strong>Dirección</strong></td>
         <td><strong>Aficiones</strong></td>
     </tr>
-
+    %contador = 0
     %for i in informacion:
+    %contador+=1
     <tr>
         <td>{{i[0]}}</td>
         <td>{{i[1]}}</td>
@@ -29,10 +30,17 @@
         <td>{{i[7]}}</td>
         <td>{{i[8]}}</td>
         <td>{{i[9]}} {{i[10]}} {{i[11]}} {{i[12]}}</td>
-        <td>{{i[13]}}</td>
+        <td>
+	    %for j in i[13]:
+	     %j = j.encode("UTF8")
+	     {{j}} &nbsp
+	    %end
+	</td>
     </tr>
 	%end
-
+    <tr>
+     Numero de resultados: {{contador}}
+    </tr>
     </table>
 
 

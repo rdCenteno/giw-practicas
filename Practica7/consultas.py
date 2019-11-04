@@ -24,25 +24,12 @@ def conectar_db():
      db = mongoclient['giw']
      return db
 
-@get('/index')
-def index():
-    return '''
-        <FORM ACTION="/index" METHOD="post">
-        <br><br><br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_users" CHECKED>1. find_users<br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_email_birthdate" UNCHECKED>2. find_email_birthdate<br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_country_likes_limit_sorted" UNCHECKED>3. find_country_likes_limit sorted<br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_birth_month" UNCHECKED>4. find_birth_month<br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_likes_not_ending" UNCHECKED>5. find_likes_not_ending<br>
-        <INPUT TYPE="radio" NAME="ejercicio" VALUE="find_leap_year" UNCHECKED>6. find_leap_year<br> <br> <br>
-        <INPUT VALUE="OK" TYPE="submit" />
-        </FORM>
-    '''
+def devuelveValores(objeto):
+    return [objeto["_id"], objeto["email"], objeto["webpage"], objeto["password"], objeto["credit_card"]["number"], objeto["credit_card"]["expire"]["year"], 
+    objeto["credit_card"]["expire"]["month"], objeto["name"], objeto["surname"], objeto["address"]["country"], objeto["address"]["zip"], objeto["address"]["street"], 
+    objeto["address"]["num"], objeto["likes"]] 
+                
 
-@route('/index', method='POST')
-def redirecionar():
-    ruta = request.forms.get('ejercicio')
-    redirect("/" + ruta)
 
 
 @get('/find_users')
@@ -50,18 +37,31 @@ def find_users():
     # http://localhost:8080/find_users?name=Luz
     # http://localhost:8080/find_users?name=Luz&surname=Romero
     # http://localhost:8080/find_users?name=Luz&surname=Romero&birthdate=2006-08-14
-
-    info = []
+    parametrosValidos = {"name":"","surname":"","birthdate":""}
+    parametrosErroneos = {}
     #Con el request.query se devuelve un diccionario que contiene los atributos de la url
     parametros = request.query
-    db = conectar_db()
-    c = db['users']
-    res = c.find(parametros)
-    for p in res:
-        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"],             p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
-
-    return template('res_ej1.tpl', informacion=info)
-
+    for parametro in parametros:
+        if parametro in parametrosValidos:
+            parametrosValidos[parametro] = parametros[parametro]
+        else:
+            parametrosErroneos[parametro] = parametros[parametro]
+    
+    if not parametrosErroneos:
+        db = conectar_db()
+        c = db['usuarios']
+        res = c.find(parametros)
+        info=[]
+        for resultado in res:
+            info.append(devuelveValores(resultado))
+        return template('res_ej1.tpl', informacion=info)
+    else:
+        #Mostrar error 
+        error = "Los siguientes parametros no son validos:  "
+        for parametro in parametrosErroneos:
+            print(type(parametrosErroneos[parametro]))
+            error += parametro + "=" + parametrosErroneos[parametro] + "  "
+        return error
 
 @get('/find_email_birthdate')
 def email_birthdate():
