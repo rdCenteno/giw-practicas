@@ -42,61 +42,28 @@ def index():
 @route('/index', method='POST')
 def redirecionar():
     ruta = request.forms.get('ejercicio')
-    redirect("/index/" + ruta)
+    redirect("/" + ruta)
 
 
-@get('/index/find_users')
+@get('/find_users')
 def find_users():
     # http://localhost:8080/find_users?name=Luz
     # http://localhost:8080/find_users?name=Luz&surname=Romero
     # http://localhost:8080/find_users?name=Luz&surname=Romero&birthdate=2006-08-14
-    
+
+    info = []
     #Con el request.query se devuelve un diccionario que contiene los atributos de la url
     parametros = request.query
     db = conectar_db()
     c = db['users']
-    print(parametros)
     res = c.find(parametros)
     for p in res:
-        print(p)
-        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"], p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
+        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"],             p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
 
-    print(info)
     return template('res_ej1.tpl', informacion=info)
-'''
-@route('/index/find_users', method='POST')
-def find_users():
-    parametros = {}
-    info = []
-    dic = {}
-    name = request.forms.get('name')
-    surname = request.forms.get('surname')
-    birthday = request.forms.get('birthday')
-    if (name != ""):
-        parametros["name"] = name
-    if (surname != ""):
-        parametros["surname"] = surname
-    if (birthday != ""):
-        parametros["birthday"] = birthday
-    db = conectar_db()
-    c = db['users']
-    print(parametros)
-    res = c.find(parametros)
-    for p in res:
-        print(p)
-        info.append([p["_id"], p["email"], p["webpage"], p["password"], p["credit_card"]["number"], p["credit_card"]["expire"]["year"], p["credit_card"]["expire"]["month"], p["name"], p["surname"], p["address"]["country"], p["address"]["zip"], p["address"]["street"], p["address"]["num"], p["likes"]])
-
-    print(info)
-    return template('res_ej1.tpl', informacion=info)
-'''
 
 
-
-
-
-
-
-@get('/index/find_email_birthdate')
+@get('/find_email_birthdate')
 def email_birthdate():
     # http://localhost:8080/find_email_birthdate?from=1973-01-01&to=1990-12-31
     return '''<h3>Ejercicio 2</h3>'''
@@ -106,17 +73,17 @@ def find_country_likes_limit_sorted():
     # http://localhost:8080/find_country_likes_limit_sorted?country=Irlanda&likes=movies,animals&limit=4&ord=asc
     return '''<h3>Ejercicio 3</h3>'''
 
-@get('/index/find_birth_month')
+@get('/find_birth_month')
 def find_birth_month():
     # http://localhost:8080/find_birth_month?month=abril
     return '''<h3>Ejercicio 4</h3>'''
 
-@get('/index/find_likes_not_ending')
+@get('/find_likes_not_ending')
 def find_likes_not_ending():
     # http://localhost:8080/find_likes_not_ending?ending=s
     return '''<h3>Ejercicio 5</h3>'''
 
-@get('/index/find_leap_year')
+@get('/find_leap_year')
 def find_leap_year():
     # http://localhost:8080/find_leap_year?exp=20
     return '''<h3>Ejercicio 6</h3>'''
