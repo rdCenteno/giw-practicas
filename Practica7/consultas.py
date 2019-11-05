@@ -115,7 +115,7 @@ def find_country_likes_limit_sorted():
     if not parametrosErroneos:
         db = conectar_db()
         c = db['usuarios']
-        res = c.find({"country": parametrosValidos["country"], "likes": {"$all": parametrosValidos["likes"]}).limit(parametrosValidos["limit"]).sort({"birthday": parametrosValidos["ord"]})
+        res = c.find({"country":parametrosValidos["country"], "likes": {"$all": parametrosValidos["likes"]}}).limit(parametrosValidos["limit"]).sort({"birthday": parametrosValidos["ord"]})
         info = []
         # Falta por hacer la plantilla y coger los resultados
         for resultado in res:
