@@ -68,75 +68,53 @@ def find_users():
 def email_birthdate():
     # http://localhost:8080/find_email_birthdate?from=1973-01-01&to=1990-12-31
     parametrosValidos = {"from": "", "to": ""}
-    parametrosErroneos = {}
     parametros = request.query
     for parametro in parametros:
-        if parametro in parametrosValidos:
             parametrosValidos[parametro] = parametros[parametro]
-        else:
-            parametrosErroneos[parametro] = parametros[parametro]
-
-    if not parametrosErroneos and (parametrosValidos["from"] != "" and parametrosValidos["to"] != ""):
-        db = conectar_db()
-        c = db['usuarios']
-        res = c.find({"birthday": {"$gte": parametrosValidos["from"], "$lte": parametrosValidos["to"]}})
-        info = []
-        # Falta por hacer la plantilla y coger los resultados
-        for resultado in res:
-            info.append(devuelveValores(resultado))
-        return template('res_ej1.tpl', informacion=info)
-    elif parametrosErroneos:
-        # Mostrar error
-        error = "Los siguientes parametros no son validos:  "
-        for parametro in parametrosErroneos:
-            error += parametro + "=" + parametrosErroneos[parametro] + "  "
-        return error
-    else:
-        return "Hay que introducir una fecha de inicio (from) y otra de fin (to)"
-    return '''<h3>Ejercicio 2</h3>'''
-
+    db = conectar_db()
+    c = db['usuarios']
+    res = c.find({"birthdate": {"$gte": parametrosValidos["from"], "$lte": parametrosValidos["to"]}})
+    info = []
+    # Falta por hacer la plantilla y coger los resultados
+    for resultado in res:
+        info.append(devuelveValores(resultado))
+    return template('res_ej1.tpl', informacion=info)
 
 @get('/find_country_likes_limit_sorted')
 def find_country_likes_limit_sorted():
     # http://localhost:8080/find_country_likes_limit_sorted?country=Irlanda&likes=movies,animals&limit=4&ord=asc
     parametrosValidos = {"country": "", "likes": "", "limit": "", "ord": ""}
-    parametrosErroneos = {}
     parametros = request.query
     for parametro in parametros:
-        if parametro in parametrosValidos:
-            parametrosValidos[parametro] = parametros[parametro]
-        else:
-            parametrosErroneos[parametro] = parametros[parametro]
+        parametrosValidos[parametro] = parametros[parametro]
     parametrosValidos["likes"] = parametrosValidos["likes"].split(",")
     if parametrosValidos["ord"] == "asc":
         parametrosValidos["ord"] = 1
     else:
         parametrosValidos["ord"] = -1
-    if not parametrosErroneos:
-        db = conectar_db()
-        c = db['usuarios']
-        res = c.find({"country":parametrosValidos["country"], "likes": {"$all": parametrosValidos["likes"]}}).limit(parametrosValidos["limit"]).sort({"birthday": parametrosValidos["ord"]})
-        info = []
-        # Falta por hacer la plantilla y coger los resultados
-        for resultado in res:
-            info.append(devuelveValores(resultado))
-        return template('res_ej1.tpl', informacion=info)
-    elif parametrosErroneos:
-        # Mostrar error
-        error = "Los siguientes parametros no son validos:  "
-        for parametro in parametrosErroneos:
-            error += parametro + "=" + parametrosErroneos[parametro] + "  "
-        return error
-    else:
-        return "Hay que introducir una fecha de inicio (from) y otra de fin (to)"
-
-    return '''<h3>Ejercicio 3</h3>'''
+    db = conectar_db()
+    c = db['usuarios']
+    res = c.find({ "address.country":parametrosValidos["country"], "likes": {"$all": parametrosValidos["likes"]}}).limit(parametrosValidos["limit"]).sort("birthdate",parametrosValidos["ord"])
+    info = []
+    # Falta por hacer la plantilla y coger los resultados
+    for resultado in res:
+        info.append(devuelveValores(resultado))
+    return template('res_ej1.tpl', informacion=info)
+    
 
 
 @get('/find_birth_month')
 def find_birth_month():
     # http://localhost:8080/find_birth_month?month=abril
-    return '''<h3>Ejercicio 4</h3>'''
+    diccionarioMeses = {"enero":"-01-","febrero":"-02-","marzo":"-03-","abril":"-04-","mayo":"-05-","junio":"-06-","julio":"-07-","agosto":"-08-","septiembre":"-09-","octubre":"-10-","noviembre":"-11-","diciembre":"-12-"}
+    mes = request.query["month"]
+    db = conectar_db()
+    c = db['usuarios']
+    res = c.find({"birthdate":{"$regex":diccionarioMeses[mes]}}).sort("birthdate")
+    info = []
+    for resultado in res:
+        info.append(devuelveValores(resultado))
+    return template('res_ej1.tpl', informacion=info)
 
 
 @get('/find_likes_not_ending')
