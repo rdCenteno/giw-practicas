@@ -79,8 +79,7 @@ def email_birthdate():
     if not parametrosErroneos and (parametrosValidos["from"] != "" and parametrosValidos["to"] != ""):
         db = conectar_db()
         c = db['usuarios']
-        res = c.find({"birthday": {"$and": [{"$gte": parametrosValidos["from"]}, {
-                     "$lte": parametrosValidos["to"]}]}})
+        res = c.find({"birthday": {"$gte": parametrosValidos["from"], "$lte": parametrosValidos["to"]}})
         info = []
         # Falta por hacer la plantilla y coger los resultados
         for resultado in res:
